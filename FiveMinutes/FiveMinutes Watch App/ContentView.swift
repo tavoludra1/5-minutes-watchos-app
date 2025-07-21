@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-struct ContentView: View {
+
+// Renombar ContenView a MainView para que sea mas descriptivo
+struct MainView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+       
+        Text("Pantalla Principal") // Texto Simple
+            .font(.title3)
+            .foregroundColor(.gray)
     }
 }
 
 #Preview {
-    ContentView()
+    MainView()
 }
