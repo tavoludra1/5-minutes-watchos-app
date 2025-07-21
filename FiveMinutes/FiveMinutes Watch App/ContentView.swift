@@ -10,12 +10,18 @@ import SwiftUI
 
 // Renombar ContenView a MainView para que sea mas descriptivo
 struct MainView: View {
+    // 1. Agregar la variable para guardar el estado actual
+    // @State observar la variable
+    @State private var isTimerRunning: Bool = false
+    
+    
     var body: some View {
         // Contenedor Vertical
         VStack {
             Button {
-                // TAREA 3: Logica temporizador
-                print("Botón de inicio presionado")
+                // accion del boton - variable estado
+                self.isTimerRunning = true
+                print("Estado de isTimerRunning a cambiado a: \(self.isTimerRunning)")
             } label: {
                 Image(systemName: "play.fill")
                     .font(.system(size: 40, weight: .bold))
