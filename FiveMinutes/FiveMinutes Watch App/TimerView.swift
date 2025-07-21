@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct TimerView: View {
-    // es el temporizador a futuro
+    // 1 crear la instancia del motor @StateObject
+    @StateObject private var timerEngine = TimerEngine()
+    
     var body: some View {
-        Text("Aquí irá el temporizador")
-            .font(.title2)
-            .foregroundColor(.green)
+        VStack(spacing: 20) {
+            // 2 mostrar propiedad timeLeftString
+            Text(timerEngine.timeLeftString)
+                .font(.system(size: 60, design: .rounded).monospacedDigit())
+                .fontWeight(.bold)
+                .foregroundColor(.green)
+            
+            // 3 adicionar boton -> cancelar cuenta regresiva
+            Button("Cancelar") {
+                // metodo stop
+                timerEngine.stop()
+            }
+            .tint(.red)
+        }
+        // 4 Accion -> iniciar temporizador
+        .onAppear {
+            timerEngine.start()
+        }
     }
 }
 
