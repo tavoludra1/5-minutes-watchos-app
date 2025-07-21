@@ -16,22 +16,29 @@ struct MainView: View {
     
     
     var body: some View {
-        // Contenedor Vertical
-        VStack {
-            Button {
-                // accion del boton - variable estado
-                self.isTimerRunning = true
-                print("Estado de isTimerRunning a cambiado a: \(self.isTimerRunning)")
-            } label: {
-                Image(systemName: "play.fill")
-                    .font(.system(size: 40, weight: .bold))
-                    .foregroundColor(.black)
-                    .frame(width: 80, height: 80)
-                    .background(Color.green)
-                    .clipShape(Circle())
+       // envolver vista
+        NavigationStack {
+            // Contenedor Vertical
+            VStack {
+                Button {
+                    // accion del boton - variable estado
+                    self.isTimerRunning = true
+                    //print("Estado de isTimerRunning a cambiado a: \(self.isTimerRunning)")
+                } label: {
+                    Image(systemName: "play.fill")
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(.black)
+                        .frame(width: 80, height: 80)
+                        .background(Color.green)
+                        .clipShape(Circle())
+                }
+                .buttonStyle(PlainButtonStyle()) // Mi estilo para watchOS.
+                
             }
-            .buttonStyle(PlainButtonStyle()) // Mi estilo para watchOS.
-
+            // agregar modificador
+            .navigationDestination(isPresented: $isTimerRunning) {
+                TimerView()
+            }
         }
     }
 }
