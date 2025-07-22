@@ -12,7 +12,7 @@ import WatchKit // para el funcionamiento haptico
 class TimerEngine: ObservableObject {
     
     // @Published cualquier cambio en esta variable sera notificada a la UI
-    @Published var timeLeftString: String = "00:05" // tiempo restante
+    @Published var timeLeftString: String = "05:00" // tiempo restante
     
     // Una forma de comunicar que el trabajo esta hecho
     @Published var isCompleted: Bool = false
@@ -20,12 +20,30 @@ class TimerEngine: ObservableObject {
     // Frases
     @Published var showPhrase: Bool = false
     
+    
+    
     private var timer: AnyCancellable?
     
-    // pruebas rapidas 5 seg
-    // 300 segundos son 5 minutos
-    private let totalSeconds: Int = 5
-    private var secondsLeft: Int = 5
+    
+    // Los segundos ya no se definen
+    private var totalSeconds: Int
+    private var secondsLeft: Int
+    
+    init() {
+        // Leer la duración guardada desde UserDefaults.
+        // Usar la misma clave "timerDuration" que en @AppStorage.
+        let savedDuration = UserDefaults.standard.integer(forKey: "timerDuration")
+        
+        // Si no hay nada guardado (devuelve 0), se usa 300 segundos (5 min) por defecto.
+        let initialDuration = savedDuration > 0 ? savedDuration : 300
+        
+        self.totalSeconds = initialDuration
+        self.secondsLeft = initialDuration
+        
+        // Se actualiza el texto inicial -> duración correcta
+        updateTimeLeftString()
+    }
+    
     
     // Iniciar la cuenta regresiva
     func start() {
@@ -43,6 +61,10 @@ class TimerEngine: ObservableObject {
 
         
        private func startCountdown() {
+           
+           // Esta línea se asegura de que cada nueva cuenta regresiva
+            // use la duración correcta (la que puede haber cambiado en Ajustes).
+            self.totalSeconds = UserDefaults.standard.integer(forKey: "timerDuration") > 0 ? UserDefaults.standard.integer(forKey: "timerDuration") : 300
            
            // Reiniciar los valores
            secondsLeft = totalSeconds
