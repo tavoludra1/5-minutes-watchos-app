@@ -37,8 +37,8 @@ struct MainView: View {
             }
             // agregar modificador
             .navigationDestination(isPresented: $isTimerRunning) {
-                //TimerView()
-                PhraseView() // pantalla frase motivacional
+                TimerView()
+                // PhraseView() // pantalla frase motivacional
             }
         }
     }
