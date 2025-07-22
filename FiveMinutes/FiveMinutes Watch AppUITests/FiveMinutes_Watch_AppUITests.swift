@@ -38,4 +38,24 @@ final class FiveMinutes_Watch_AppUITests: XCTestCase {
             XCUIApplication().launch()
         }
     }
+    
+    @MainActor
+    func testNavigationToTimerView() throws {
+        // 1. Preparamos la aplicación para ser lanzada.
+        let app = XCUIApplication()
+        app.launch()
+
+        // 2. Buscamos el botón de inicio. Usamos 'buttons.firstMatch' porque solo hay uno.
+        let startButton = app.buttons.firstMatch
+        XCTAssertTrue(startButton.exists, "El botón de inicio debería existir.")
+        
+        // 3. Tocamos el botón.
+        startButton.tap()
+        
+        // 4. Verificamos que hemos navegado. Buscamos el texto que aparece en la pantalla
+        //    del temporizador (la frase motivacional es lo primero que se ve).
+        //    La prueba esperará un poco a que aparezca el elemento.
+        let phraseText = app.staticTexts.firstMatch
+        XCTAssertTrue(phraseText.waitForExistence(timeout: 3), "Debería navegar y mostrar un texto de frase motivacional.")
+    }
 }
