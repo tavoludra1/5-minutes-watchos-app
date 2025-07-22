@@ -12,7 +12,16 @@ struct SettingsView: View {
     let availableDurations: [Int] = [3 * 60, 5 * 60, 10 * 60]
     
     // Variable para guardar la seleccion actual del selector
-    @State private var selectedDuration: Int = 3 * 60
+    // @State private var selectedDuration: Int = 3 * 60
+    
+    // 'timerDuration' es importante para la guardar datos en memoria
+    // 300 valor por defecto
+    @AppStorage("timerDuration") var selectedDuration: Int = 5 * 60
+    
+    // Para cerrar la vista en vez de 'Guardar'
+    @Environment(\.dismiss) private var dismiss
+    
+    
     
     
     var body: some View {
@@ -28,8 +37,9 @@ struct SettingsView: View {
             }
             .pickerStyle(.wheel)
             Button("Guardar") {
-                // Logica en la siguiente tarea
+                
                 print("Duración seleccionada: \(selectedDuration) segundos")
+                dismiss() // cierra la ventana de ajustes
             }
         }
         .navigationTitle("Ajustes")
