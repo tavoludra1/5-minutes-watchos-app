@@ -14,6 +14,9 @@ class TimerEngine: ObservableObject {
     // @Published cualquier cambio en esta variable sera notificada a la UI
     @Published var timeLeftString: String = "00:05" // tiempo restante
     
+    // Una forma de comunicar que el trabajo esta hecho
+    @Published var isCompleted: Bool = false
+    
     private var timer: AnyCancellable?
     
     // pruebas rapidas 5 seg
@@ -23,6 +26,10 @@ class TimerEngine: ObservableObject {
     
     // Iniciar la cuenta regresiva
     func start() {
+        // Reiniciar el estado
+        isCompleted = false
+        
+        
         // Reiniciar los valores
         secondsLeft = totalSeconds
         updateTimeLeftString()
@@ -39,6 +46,8 @@ class TimerEngine: ObservableObject {
                     
                     // ojo este lugar es para el haptic
                     WKInterfaceDevice.current().play(.success)
+                    
+                    self.isCompleted = true // reiniciar
                     
                     self.stop()
                 }
