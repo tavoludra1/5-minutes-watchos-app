@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine // @Published y temporizador
+import WatchKit // para el funcionamiento haptico
 
 class TimerEngine: ObservableObject {
     
@@ -35,7 +36,10 @@ class TimerEngine: ObservableObject {
                 
                 if self.secondsLeft <= 0 {
                     print("¡Temporizador Finalizado!")
+                    
                     // ojo este lugar es para el haptic
+                    WKInterfaceDevice.current().play(.success)
+                    
                     self.stop()
                 }
             }
