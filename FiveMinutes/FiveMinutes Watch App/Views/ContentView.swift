@@ -20,6 +20,8 @@ struct MainView: View {
         NavigationStack {
             // Contenedor Vertical
             VStack {
+                Spacer()
+                
                 Button {
                     // accion del boton - variable estado
                     self.isTimerRunning = true
@@ -33,6 +35,17 @@ struct MainView: View {
                         .clipShape(Circle())
                 }
                 .buttonStyle(PlainButtonStyle()) // Mi estilo para watchOS.
+                
+                Spacer()
+                
+                // Añadir un NavigationLink que lleva a la vista de Ajustes.
+                NavigationLink(destination: SettingsView()) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.title2)
+                }
+               
+                .buttonStyle(PlainButtonStyle()) // Mi estilo para watchOS.
+                
                 
             }
             // agregar modificador
