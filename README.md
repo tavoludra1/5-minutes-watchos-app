@@ -1,5 +1,4 @@
-# 5 Minutes 🧘
-
+# 5 Minutes⌚️
 *Tu refugio personal en la muñeca para tomar un respiro del día a día.*
 
 "5 Minutes" es una aplicación para Apple Watch, construida bajo la filosofía de que las pequeñas pausas son esenciales para la productividad y el bienestar mental. La app te permite iniciar un descanso de 5 minutos con un solo toque, ayudándote a desconectar, respirar y recargar energías.
