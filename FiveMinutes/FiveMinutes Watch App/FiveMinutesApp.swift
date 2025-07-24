@@ -8,10 +8,16 @@
 import SwiftUI
 
 @main
-struct FiveMinutes_Watch_AppApp: App {
+struct FiveMinutesApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                // El modificador se aplica aquí, dentro del WindowGroup
+                .onOpenURL { url in
+                    if url.scheme == "fiveminutes" && url.host == "start" {
+                        print("Complicación tocada: Iniciar temporizador.")
+                    }
+                }
         }
     }
 }
