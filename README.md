@@ -30,7 +30,7 @@ Para clonar y ejecutar este proyecto localmente, sigue estos pasos:
 
 1.  Clona el repositorio:
     ```bash
-    git clone [URL_DEL_REPOSITORIO]
+    git clone https://github.com/tavoludra1/5-minutes-watchos-app
     ```
 2.  Abre el archivo `.xcodeproj` o `.xcworkspace` en Xcode.
 3.  ¡Compila y ejecuta en el simulador de Apple Watch!
