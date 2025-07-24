@@ -16,6 +16,7 @@ struct ComplicationView: View {
             .foregroundColor(.green)
         // URL app interactiva
             .widgetURL(URL(string: "fiveminutes://start"))
+            .containerBackground(.fill.tertiary, for: .widget)
     }
 }
 
@@ -31,12 +32,12 @@ struct FiveMinutesComplication: Widget {
         .configurationDisplayName("5 Minutes")
         .description("Inicia un descanso rápido.")
         .supportedFamilies([
-            .accessoryCircular // Esta es la familia correcta para una complicación circular pequeña
+            .accessoryCircular // Esta es la familia correcta -> complicación circular pequeña
         ])
     }
 }
 
-// Define la lógica para actualizar la complicación (por ahora, muy simple)
+// Define la lógica para actualizar la complicación 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date())
