@@ -58,36 +58,66 @@ class TimerEngine: ObservableObject {
             self.startCountdown() // E iniciamos la cuenta regresiva
         }
     }
-
+    
+    
+    private func startCountdown() {
         
-       private func startCountdown() {
-           
-           // Esta línea se asegura de que cada nueva cuenta regresiva
-            // use la duración correcta (la que puede haber cambiado en Ajustes).
-            self.totalSeconds = UserDefaults.standard.integer(forKey: "timerDuration") > 0 ? UserDefaults.standard.integer(forKey: "timerDuration") : 300
-           
-           // Reiniciar los valores
-           secondsLeft = totalSeconds
-           updateTimeLeftString()
-           
-           // configurar el encendido del temporizador
-           timer = Timer.publish(every: 1, on: .main, in: .common)
-               .autoconnect()
-               .sink { _ in
-                   self.secondsLeft -= 1
-                   self.updateTimeLeftString()
-                   
-                   if self.secondsLeft <= 0 {
-                       print("¡Temporizador Finalizado!")
-                       
-                       // ojo este lugar es para el haptic
-                       WKInterfaceDevice.current().play(.success)
-                       
-                       self.isCompleted = true // reiniciar
-                       
-                       self.stop()
-                   }
-               }
+        // Esta línea se asegura de que cada nueva cuenta regresiva
+        // use la duración correcta (la que puede haber cambiado en Ajustes).
+        self.totalSeconds = UserDefaults.standard.integer(forKey: "timerDuration") > 0 ? UserDefaults.standard.integer(forKey: "timerDuration") : 300
+        
+        // Reiniciar los valores
+        secondsLeft = totalSeconds
+        updateTimeLeftString()
+        
+        // configurar el encendido del temporizador
+        timer = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.secondsLeft -= 1
+                self.updateTimeLeftString()
+                
+                if self.secondsLeft <= 0 {
+                    //                       print("¡Temporizador Finalizado!")
+                    //
+                    //                       // ojo este lugar es para el haptic
+                    //                       WKInterfaceDevice.current().play(.success)
+                    //
+                    //                       self.isCompleted = true // reiniciar
+                    //
+                    //                       self.stop()
+                    
+                    
+                    
+                    // llamar healthkitmanager
+                    
+                    // 1. Detenemos el temporizador
+                    self.stop()
+                    
+                    // 2. Llamamos -> HealthKitManager
+                    HealthKitManager.shared.requestAuthorization { success in
+                        if success {
+                            // Si tenemos permiso, guardamos la sesión
+                            HealthKitManager.shared.saveMindfulSession(durationInSeconds: TimeInterval(self.totalSeconds)) { saved in
+                                DispatchQueue.main.async {
+                                    self.isCompleted = true // Marcamos como completado después de intentar guardar
+                                }
+                                print(saved ? "Sesión guardada." : "Fallo al guardar sesión.")
+                            }
+                        } else {
+                            // Si no tenemos permiso, simplemente completamos
+                            DispatchQueue.main.async {
+                                self.isCompleted = true
+                            }
+                            print("Autorización de HealthKit denegada.")
+                        }
+                    }
+                    
+                    // 3. La vibración ocurre inmediatamente
+                    WKInterfaceDevice.current().play(.success)
+                    
+                }
+            }
     }
     
     // Detener la cuenta regresiva
