@@ -34,4 +34,25 @@ class HealthKitManager {
             completion(success)
         }
     }
+    
+    // Guardar sesion en mindfulness
+    func saveMindfulSession(durationInSeconds: TimeInterval, completion: @escaping (Bool) -> Void) {
+        guard let mindfulType = HKObjectType.categoryType(forIdentifier: .mindfulSession) else {
+            completion(false)
+            return
+        }
+        
+        let now = Date()
+        let startDate = now.addingTimeInterval(-durationInSeconds)
+        let endDate = now
+        
+        let mindfulSample = HKCategorySample(type: mindfulType, value: 0, start: startDate, end: endDate)
+        
+        healthStore.save(mindfulSample) { success, error in
+            if let error = error {
+                print("Error al guardar la sesión de mindfulness: \(error.localizedDescription)")
+            }
+            completion(success)
+        }
+    }
 }
