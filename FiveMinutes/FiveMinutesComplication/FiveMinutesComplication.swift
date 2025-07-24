@@ -14,6 +14,8 @@ struct ComplicationView: View {
         Image(systemName: "play.circle.fill")
             .font(.title)
             .foregroundColor(.green)
+        // URL app interactiva
+            .widgetURL(URL(string: "fiveminutes://start"))
     }
 }
 
