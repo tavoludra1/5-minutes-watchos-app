@@ -7,10 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B34EC5082E31B27D00184BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34EC5072E31B27D00184BF9 /* WidgetKit.framework */; };
+		B34EC50A2E31B27D00184BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34EC5092E31B27D00184BF9 /* SwiftUI.framework */; };
+		B34EC5132E31B27F00184BF9 /* FiveMinutesComplicationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B34EC5052E31B27D00184BF9 /* FiveMinutesComplicationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B3548B852E2E52C90045BA41 /* FiveMinutes Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B3548B842E2E52C90045BA41 /* FiveMinutes Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B34EC5112E31B27F00184BF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3548B782E2E52C90045BA41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B34EC5042E31B27D00184BF9;
+			remoteInfo = FiveMinutesComplicationExtension;
+		};
 		B3548B862E2E52C90045BA41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B3548B782E2E52C90045BA41 /* Project object */;
@@ -35,6 +45,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B34EC5142E31B27F00184BF9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B34EC5132E31B27F00184BF9 /* FiveMinutesComplicationExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3548BAA2E2E52CB0045BA41 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,13 +70,34 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B34EC5052E31B27D00184BF9 /* FiveMinutesComplicationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FiveMinutesComplicationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B34EC5072E31B27D00184BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B34EC5092E31B27D00184BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B3548B7E2E2E52C90045BA41 /* FiveMinutes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiveMinutes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3548B842E2E52C90045BA41 /* FiveMinutes Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FiveMinutes Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3548B932E2E52CB0045BA41 /* FiveMinutes Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FiveMinutes Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3548B9D2E2E52CB0045BA41 /* FiveMinutes Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FiveMinutes Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B34EC5172E31B27F00184BF9 /* Exceptions for "FiveMinutesComplication" folder in "FiveMinutesComplicationExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B34EC5042E31B27D00184BF9 /* FiveMinutesComplicationExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B34EC50B2E31B27D00184BF9 /* FiveMinutesComplication */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B34EC5172E31B27F00184BF9 /* Exceptions for "FiveMinutesComplication" folder in "FiveMinutesComplicationExtension" target */,
+			);
+			path = FiveMinutesComplication;
+			sourceTree = "<group>";
+		};
 		B3548B882E2E52C90045BA41 /* FiveMinutes Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "FiveMinutes Watch App";
@@ -74,6 +116,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B34EC5022E31B27D00184BF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B34EC50A2E31B27D00184BF9 /* SwiftUI.framework in Frameworks */,
+				B34EC5082E31B27D00184BF9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3548B812E2E52C90045BA41 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -98,12 +149,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B34EC5062E31B27D00184BF9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B34EC5072E31B27D00184BF9 /* WidgetKit.framework */,
+				B34EC5092E31B27D00184BF9 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B3548B772E2E52C90045BA41 = {
 			isa = PBXGroup;
 			children = (
 				B3548B882E2E52C90045BA41 /* FiveMinutes Watch App */,
 				B3548B962E2E52CB0045BA41 /* FiveMinutes Watch AppTests */,
 				B3548BA02E2E52CB0045BA41 /* FiveMinutes Watch AppUITests */,
+				B34EC50B2E31B27D00184BF9 /* FiveMinutesComplication */,
+				B34EC5062E31B27D00184BF9 /* Frameworks */,
 				B3548B7F2E2E52C90045BA41 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -115,6 +177,7 @@
 				B3548B842E2E52C90045BA41 /* FiveMinutes Watch App.app */,
 				B3548B932E2E52CB0045BA41 /* FiveMinutes Watch AppTests.xctest */,
 				B3548B9D2E2E52CB0045BA41 /* FiveMinutes Watch AppUITests.xctest */,
+				B34EC5052E31B27D00184BF9 /* FiveMinutesComplicationExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +185,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B34EC5042E31B27D00184BF9 /* FiveMinutesComplicationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B34EC5182E31B27F00184BF9 /* Build configuration list for PBXNativeTarget "FiveMinutesComplicationExtension" */;
+			buildPhases = (
+				B34EC5012E31B27D00184BF9 /* Sources */,
+				B34EC5022E31B27D00184BF9 /* Frameworks */,
+				B34EC5032E31B27D00184BF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B34EC50B2E31B27D00184BF9 /* FiveMinutesComplication */,
+			);
+			name = FiveMinutesComplicationExtension;
+			packageProductDependencies = (
+			);
+			productName = FiveMinutesComplicationExtension;
+			productReference = B34EC5052E31B27D00184BF9 /* FiveMinutesComplicationExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B3548B7D2E2E52C90045BA41 /* FiveMinutes */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B3548BAB2E2E52CB0045BA41 /* Build configuration list for PBXNativeTarget "FiveMinutes" */;
@@ -148,10 +233,12 @@
 				B3548B802E2E52C90045BA41 /* Sources */,
 				B3548B812E2E52C90045BA41 /* Frameworks */,
 				B3548B822E2E52C90045BA41 /* Resources */,
+				B34EC5142E31B27F00184BF9 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B34EC5122E31B27F00184BF9 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B3548B882E2E52C90045BA41 /* FiveMinutes Watch App */,
@@ -219,6 +306,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					B34EC5042E31B27D00184BF9 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					B3548B7D2E2E52C90045BA41 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -253,11 +343,19 @@
 				B3548B832E2E52C90045BA41 /* FiveMinutes Watch App */,
 				B3548B922E2E52CB0045BA41 /* FiveMinutes Watch AppTests */,
 				B3548B9C2E2E52CB0045BA41 /* FiveMinutes Watch AppUITests */,
+				B34EC5042E31B27D00184BF9 /* FiveMinutesComplicationExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B34EC5032E31B27D00184BF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3548B7C2E2E52C90045BA41 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,6 +387,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B34EC5012E31B27D00184BF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B3548B802E2E52C90045BA41 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,6 +418,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B34EC5122E31B27F00184BF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B34EC5042E31B27D00184BF9 /* FiveMinutesComplicationExtension */;
+			targetProxy = B34EC5112E31B27F00184BF9 /* PBXContainerItemProxy */;
+		};
 		B3548B872E2E52C90045BA41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B3548B832E2E52C90045BA41 /* FiveMinutes Watch App */;
@@ -331,6 +441,67 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		B34EC5152E31B27F00184BF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y65QKG27DA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FiveMinutesComplication/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FiveMinutesComplication;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gustavot.FiveMinutes.watchkitapp.FiveMinutesComplication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		B34EC5162E31B27F00184BF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y65QKG27DA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FiveMinutesComplication/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FiveMinutesComplication;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gustavot.FiveMinutes.watchkitapp.FiveMinutesComplication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
 		B3548BA52E2E52CB0045BA41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -620,6 +791,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B34EC5182E31B27F00184BF9 /* Build configuration list for PBXNativeTarget "FiveMinutesComplicationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B34EC5152E31B27F00184BF9 /* Debug */,
+				B34EC5162E31B27F00184BF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B3548B7B2E2E52C90045BA41 /* Build configuration list for PBXProject "FiveMinutes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
