@@ -11,122 +11,101 @@ import WatchKit // para el funcionamiento haptico
 
 class TimerEngine: ObservableObject {
     
-    // @Published cualquier cambio en esta variable sera notificada a la UI
-    @Published var timeLeftString: String = "05:00" // tiempo restante
-    
-    // Una forma de comunicar que el trabajo esta hecho
+    @Published var timeLeftString: String = "05:00"
     @Published var isCompleted: Bool = false
-    
-    // Frases
     @Published var showPhrase: Bool = false
-    
-    
     
     private var timer: AnyCancellable?
     
-    
-    // Los segundos ya no se definen
+    // 'totalSeconds' se lee desde la configuración guardada por el usuario.
     private var totalSeconds: Int
     private var secondsLeft: Int
     
     init() {
-        // Leer la duración guardada desde UserDefaults.
-        // Usar la misma clave "timerDuration" que en @AppStorage.
+        // Leemos la duración guardada desde UserDefaults.
+        // Usamos la misma clave "timerDuration" que en @AppStorage.
         let savedDuration = UserDefaults.standard.integer(forKey: "timerDuration")
         
-        // Si no hay nada guardado (devuelve 0), se usa 300 segundos (5 min) por defecto.
+        // Si no hay nada guardado (devuelve 0), usamos 300 segundos (5 min) por defecto.
         let initialDuration = savedDuration > 0 ? savedDuration : 300
         
         self.totalSeconds = initialDuration
         self.secondsLeft = initialDuration
         
-        // Se actualiza el texto inicial -> duración correcta
+        // Actualizamos el texto inicial para que refleje la duración correcta.
         updateTimeLeftString()
     }
     
-    
-    // Iniciar la cuenta regresiva
-    func start() {
-        // Reiniciar el estado
+    func start(phraseDisplayDuration: TimeInterval) {
         isCompleted = false
+        showPhrase = true
         
-        // Mostrar frase
-        showPhrase = true // indicar que la frase se muestra
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.showPhrase = false // Ocultamos la frase
-            self.startCountdown() // E iniciamos la cuenta regresiva
+        // Usa la duración calculada dinámicamente.
+        DispatchQueue.main.asyncAfter(deadline: .now() + phraseDisplayDuration) {
+            if self.showPhrase {
+                self.showPhrase = false
+                self.startCountdown()
+            }
         }
     }
     
-    
     private func startCountdown() {
-        
-        // Esta línea se asegura de que cada nueva cuenta regresiva
-        // use la duración correcta (la que puede haber cambiado en Ajustes).
-        self.totalSeconds = UserDefaults.standard.integer(forKey: "timerDuration") > 0 ? UserDefaults.standard.integer(forKey: "timerDuration") : 300
-        
-        // Reiniciar los valores
+        // Actualizamos totalSeconds cada vez que inicia el contador, por si el usuario lo cambió en Ajustes.
+        let savedDuration = UserDefaults.standard.integer(forKey: "timerDuration")
+        self.totalSeconds = savedDuration > 0 ? savedDuration : 300
         secondsLeft = totalSeconds
         updateTimeLeftString()
         
-        // configurar el encendido del temporizador
+        // Creamos el temporizador que se ejecuta cada segundo.
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                self.secondsLeft -= 1
-                self.updateTimeLeftString()
+                // Si queda tiempo, restamos un segundo.
+                if self.secondsLeft > 0 {
+                    self.secondsLeft -= 1
+                    self.updateTimeLeftString()
+                }
                 
+                // Si el tiempo llega a cero, finalizamos.
                 if self.secondsLeft <= 0 {
-                    //                       print("¡Temporizador Finalizado!")
-                    //
-                    //                       // ojo este lugar es para el haptic
-                    //                       WKInterfaceDevice.current().play(.success)
-                    //
-                    //                       self.isCompleted = true // reiniciar
-                    //
-                    //                       self.stop()
-                    
-                    
-                    
-                    // llamar healthkitmanager
-                    
-                    // 1. Detenemos el temporizador
-                    self.stop()
-                    
-                    // 2. Llamamos -> HealthKitManager
-                    HealthKitManager.shared.requestAuthorization { success in
-                        if success {
-                            // Si tenemos permiso, guardamos la sesión
-                            HealthKitManager.shared.saveMindfulSession(durationInSeconds: TimeInterval(self.totalSeconds)) { saved in
-                                DispatchQueue.main.async {
-                                    self.isCompleted = true // Marcamos como completado después de intentar guardar
-                                }
-                                print(saved ? "Sesión guardada." : "Fallo al guardar sesión.")
-                            }
-                        } else {
-                            // Si no tenemos permiso, simplemente completamos
-                            DispatchQueue.main.async {
-                                self.isCompleted = true
-                            }
-                            print("Autorización de HealthKit denegada.")
-                        }
-                    }
-                    
-                    // 3. La vibración ocurre inmediatamente
-                    WKInterfaceDevice.current().play(.success)
-                    
+                    self.finishTimer()
                 }
             }
     }
     
-    // Detener la cuenta regresiva
-    func stop() {
-        timer?.cancel()
-        print("Temporizador Detenido 🛑")
+    private func finishTimer() {
+        self.stop() // Detenemos el temporizador interno.
+        
+        // Solicitamos permiso y guardamos la sesión en HealthKit.
+        HealthKitManager.shared.requestAuthorization { success in
+            if success {
+                HealthKitManager.shared.saveMindfulSession(durationInSeconds: TimeInterval(self.totalSeconds)) { saved in
+                    // Una vez completado el guardado, notificamos a la vista para que se cierre.
+                    DispatchQueue.main.async {
+                        self.isCompleted = true
+                    }
+                    print(saved ? "Sesión de Mindfulness guardada." : "Fallo al guardar la sesión.")
+                }
+            } else {
+                // Si no hay permiso, simplemente completamos el ciclo.
+                DispatchQueue.main.async {
+                    self.isCompleted = true
+                }
+                print("Autorización de HealthKit denegada.")
+            }
+        }
+        
+        // Activamos la vibración háptica inmediatamente.
+        WKInterfaceDevice.current().play(.success)
     }
     
-    // funcion para formatear el tiempo -> minutos:segundos
+    func stop() {
+        // Cancelamos y liberamos el temporizador para evitar que siga corriendo en segundo plano.
+        timer?.cancel()
+        timer = nil
+        showPhrase = false // Nos aseguramos de resetear el estado al detener.
+    }
+    
     private func updateTimeLeftString() {
         let minutes = secondsLeft / 60
         let seconds = secondsLeft % 60

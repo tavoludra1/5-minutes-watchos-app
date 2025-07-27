@@ -10,53 +10,69 @@ import SwiftUI
 
 // Renombar ContenView a MainView para que sea mas descriptivo
 struct MainView: View {
-    // 1. Agregar la variable para guardar el estado actual
-    // @State observar la variable
-    @State private var isTimerRunning: Bool = false
-    
-    
+    @State private var isTimerRunning = false
+    // CAMBIO: Esta variable de estado ahora controla qué ícono se muestra.
+    @State private var iconName = "hourglass.bottomhalf.filled"
+
     var body: some View {
-       // envolver vista
         NavigationStack {
-            // Contenedor Vertical
-            VStack {
-                Spacer()
-                
-                Button {
-                    // accion del boton - variable estado
-                    self.isTimerRunning = true
-                    //print("Estado de isTimerRunning a cambiado a: \(self.isTimerRunning)")
-                } label: {
-                    Image(systemName: "play.fill")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(.black)
-                        .frame(width: 80, height: 80)
-                        .background(Color.green)
-                        .clipShape(Circle())
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.6)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .edgesIgnoringSafeArea(.all)
+
+                VStack {
+                    Spacer()
+
+                    Button(action: {
+                        // CAMBIO: Implementamos la nueva lógica de animación interactiva.
+                        // 1. Cambia el ícono al ser presionado.
+                        self.iconName = "hourglass.tophalf.filled"
+                        
+                        // 2. Espera un momento para que el cambio sea visible.
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.70) {
+                            // 3. Activa la navegación.
+                            self.isTimerRunning = true
+                        }
+                    }) {
+                        // El ícono ahora es dinámico, basado en nuestra variable de estado.
+                        Image(systemName: iconName)
+                            .font(.system(size: 40, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 80, height: 80)
+                            .background(Color.purple)
+                            .clipShape(Circle())
+                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+
+                    Spacer()
+
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gearshape.fill")
+                            .font(.title2)
+                    }
+                    .tint(.white.opacity(0.8))
                 }
-                .buttonStyle(PlainButtonStyle()) // Mi estilo para watchOS.
-                
-                Spacer()
-                
-                // Añadir un NavigationLink que lleva a la vista de Ajustes.
-                NavigationLink(destination: SettingsView()) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.title2)
-                }
-               
-                .buttonStyle(PlainButtonStyle()) // Mi estilo para watchOS.
-                
-                
+                .buttonStyle(PlainButtonStyle())
+                .padding(.bottom)
             }
-            // agregar modificador
             .navigationDestination(isPresented: $isTimerRunning) {
                 TimerView()
-                // PhraseView() // pantalla frase motivacional
+            }
+            //.navigationTitle("5 Minutes")
+            .navigationBarTitleDisplayMode(.inline)
+            // CAMBIO: Usamos .onAppear para resetear el ícono cada vez que la vista aparece.
+            .onAppear {
+                self.iconName = "hourglass.bottomhalf.filled"
             }
         }
     }
 }
-
-#Preview {
-    MainView()
-}
+    
+    #Preview {
+        MainView()
+    }
