@@ -7,45 +7,53 @@
 
 import SwiftUI
 
+
 struct SettingsView: View {
-    // Duracion en segundos de (3, 5, 10 minutos)
-    let availableDurations: [Int] = [3 * 60, 5 * 60, 10 * 60]
-    
-    // Variable para guardar la seleccion actual del selector
-    // @State private var selectedDuration: Int = 3 * 60
-    
-    // 'timerDuration' es importante para la guardar datos en memoria
-    // 300 valor por defecto
-    @AppStorage("timerDuration") var selectedDuration: Int = 5 * 60
-    
-    // Para cerrar la vista en vez de 'Guardar'
-    @Environment(\.dismiss) private var dismiss
-    
-    
-    
+    @AppStorage("timerDuration") var selectedDuration = 300
+    @AppStorage("phraseCategory") var selectedCategory = "General"
     
     var body: some View {
-        VStack {
-            Text("Duración del Descanso")
-                .font(.headline)
+        // Usamos un 'List' para una apariencia nativa de watchOS.
+        ZStack {
             
-            Picker("Tiempo", selection: $selectedDuration) {
-                ForEach(availableDurations, id: \.self) { duration in
-                    Text("\(duration / 60) minutos")
-                    
+            // Gradiente
+            LinearGradient(
+                gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.6)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
+            
+            List {
+                // Cada opción es un NavigationLink que lleva a su propia pantalla de selección.
+                NavigationLink(destination: DurationSelectionView()) {
+                    VStack(alignment: .leading) {
+                        Text("Duración del Descanso")
+                            .foregroundColor(.white)
+                        // Mostramos el valor actual para que el usuario tenga contexto.
+                        Text("\(selectedDuration / 60) minutos")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
                 }
-            }
-            .pickerStyle(.wheel)
-            Button("Guardar") {
+                .listRowBackground(Color.white.opacity(0.1))
                 
-                print("Duración seleccionada: \(selectedDuration) segundos")
-                dismiss() // cierra la ventana de ajustes
+                NavigationLink(destination: CategorySelectionView()) {
+                    VStack(alignment: .leading) {
+                        Text("Categoría de Frases")
+                            .foregroundColor(.white)
+                        // Mostramos la categoría actual.
+                        Text(selectedCategory)
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                }
+                .listRowBackground(Color.white.opacity(0.1))
             }
+            .navigationTitle("Ajustes")
         }
-        .navigationTitle("Ajustes")
     }
 }
-
 #Preview {
     NavigationStack {
         SettingsView()
